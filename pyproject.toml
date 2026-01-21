@@ -11,4 +11,6 @@ dependencies = [
     "langchain-ollama>=1.0.1",
     "pdfplumber>=0.11.9",
     "pymilvus>=2.6.6",
+    "langchain-milvus",
+    "sentence-transformers"
 ]

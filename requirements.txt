@@ -4,4 +4,5 @@ langchain
 langchain-community
 langchain-ollama
 langchain-huggingface
-# sentence-transformers
+langchain-milvus
+sentence-transformers
