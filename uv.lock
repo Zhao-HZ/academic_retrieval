@@ -15,6 +15,8 @@ dependencies = [
     { name = "pdfplumber" },
     { name = "pymilvus" },
     { name = "sentence-transformers" },
+    { name = "wordninja" },
+    { name = "wordsegment" },
 ]
 
 [package.metadata]
@@ -27,6 +29,8 @@ requires-dist = [
     { name = "pdfplumber", specifier = ">=0.11.9" },
     { name = "pymilvus", specifier = ">=2.6.6" },
     { name = "sentence-transformers" },
+    { name = "wordninja", specifier = ">=2.0.0" },
+    { name = "wordsegment", specifier = ">=1.3.1" },
 ]
 
 [[package]]
@@ -1792,6 +1796,21 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/f5/80/4f7c7efd734d1494397c781bd3d421688e9c187ae836e3174625b1ddf8b0/uuid_utils-0.13.0-cp39-abi3-win32.whl", hash = "sha256:3e4f2cc54e6a99c0551158100ead528479ad2596847478cbad624977064ffce3", size = 177650, upload-time = "2026-01-08T15:47:55.679Z" },
     { url = "https://files.pythonhosted.org/packages/6c/94/d05ab68622e66ad787a241dfe5ccc649b3af09f30eae977b9ee8f7046aaa/uuid_utils-0.13.0-cp39-abi3-win_amd64.whl", hash = "sha256:046cb2756e1597b3de22d24851b769913e192135830486a0a70bf41327f0360c", size = 183211, upload-time = "2026-01-08T15:47:57.604Z" },
     { url = "https://files.pythonhosted.org/packages/69/37/674b3ce25cd715b831ea8ebbd828b74c40159f04c95d1bb963b2c876fe79/uuid_utils-0.13.0-cp39-abi3-win_arm64.whl", hash = "sha256:5447a680df6ef8a5a353976aaf4c97cc3a3a22b1ee13671c44227b921e3ae2a9", size = 183518, upload-time = "2026-01-08T15:47:59.148Z" },
+]
+
+[[package]]
+name = "wordninja"
+version = "2.0.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/30/15/abe4af50f4be92b60c25e43c1c64d08453b51e46c32981d80b3aebec0260/wordninja-2.0.0.tar.gz", hash = "sha256:1a1cc7ec146ad19d6f71941ee82aef3d31221700f0d8bf844136cf8df79d281a", size = 541572, upload-time = "2019-08-10T02:16:54.944Z" }
+
+[[package]]
+name = "wordsegment"
+version = "1.3.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/64/68/08112f4c2888f41520e54e2d0b22dcec5adb28cddf4eeca344eb9da04177/wordsegment-1.3.1.tar.gz", hash = "sha256:3dcc7cd1e9bba3f3ffe6a0e54d98377bc502fc34e9e9d8c8199ac5636924f023", size = 4828756, upload-time = "2018-07-07T03:51:29.142Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/cf/6c/e6f4734d6f7d28305f52ec81377d7ce7d1856b97b814278e9960183235ad/wordsegment-1.3.1-py2.py3-none-any.whl", hash = "sha256:dd10e32fdb890079532ddffc1d179f839627af8345ecf52b84627a536449648d", size = 4827997, upload-time = "2018-07-07T03:51:19.955Z" },
 ]
 
 [[package]]

@@ -12,5 +12,7 @@ dependencies = [
     "pdfplumber>=0.11.9",
     "pymilvus>=2.6.6",
     "langchain-milvus",
-    "sentence-transformers"
+    "sentence-transformers",
+    "wordninja>=2.0.0",
+    "wordsegment>=1.3.1",
 ]

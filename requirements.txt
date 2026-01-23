@@ -6,3 +6,5 @@ langchain-ollama
 langchain-huggingface
 langchain-milvus
 sentence-transformers
+wordsegment
+# wordninja
