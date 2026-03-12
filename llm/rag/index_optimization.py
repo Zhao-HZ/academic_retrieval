@@ -1,7 +1,7 @@
 from pymilvus import \
     MilvusClient, AnnSearchRequest, Function, FunctionType
 from typing import Tuple, Iterator
-from embedding_model import get_bge_embeddings_single, BGE_EMBEDDING_DIM
+from embedding_model import get_ollama_qwen_embeddings, QWEN_EMBEDDING_DIM
 from rag_config import *
 
 def initialize_db():
@@ -12,9 +12,24 @@ def initialize_db():
     client.use_database(DB_NAME)
     return client
 
+def create_indexes(client):
+    """Create indexes for the collection if they don't exist."""
+    index_params = MilvusClient.prepare_index_params()
+    index_params.add_index(
+        field_name='sparse_vector',
+        index_type='SPARSE_INVERTED_INDEX',
+        metric_type='BM25'
+    )
+    index_params.add_index(field_name='dense_vector', index_type='FLAT', metric_type='IP')
+    client.create_index(collection_name=COLLECTION_NAME, index_params=index_params)
+
 class FullTextRetrieval:
     def __init__(self):
-        self.client = initialize_db() 
+        self.client = initialize_db()
+        # Create indexes if not exist
+        create_indexes(self.client)
+        # Load collection into memory before searching
+        self.client.load_collection(collection_name=COLLECTION_NAME)
     
     def query(self, queries) -> list:
         results = self.client.search(
@@ -34,6 +49,10 @@ class FullTextRetrieval:
 class HybridTextRetrieval:
     def __init__(self):
         self.client = initialize_db()
+        # Create indexes if not exist
+        create_indexes(self.client)
+        # Load collection into memory before searching
+        self.client.load_collection(collection_name=COLLECTION_NAME)
         self.ranker = Function(
             name="rrf",
             input_field_names=[],
@@ -45,7 +64,8 @@ class HybridTextRetrieval:
         )         
 
     def query(self, query_text) -> list:
-        query_dense_vector = get_bge_embeddings_single(query_text)
+        # query_dense_vector = get_bge_embeddings([query_text])[0]
+        query_dense_vector = get_ollama_qwen_embeddings([query_text])[0]
         search_param_1 = {
             'data': [query_dense_vector],
             'anns_field': "dense_vector",
@@ -80,5 +100,6 @@ class HybridTextRetrieval:
 if __name__ == '__main__':
     # ret = FullTextRetrieval()
     ret = HybridTextRetrieval() 
-    ret.query(['graph neural-network'])
-    # ret.query('Graph')
+    ret.query('word embedding')
+    # ret.query('Part 2 of EE6221 – Scope')
+

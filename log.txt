@@ -1,0 +1,72 @@
+2026-03-11 22:43:12,408 [ERROR][handler]: RPC error: [hybrid_search], <MilvusException: (code=101, message=failed to search: collection not loaded[collection=464843822000244741])>, <Time:{'RPC start': '2026-03-11 22:43:12.386647', 'RPC error': '2026-03-11 22:43:12.405475'}>
+Traceback:
+Traceback (most recent call last):
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\decorators.py", line 387, in handler
+    return func(*args, **kwargs)
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\decorators.py", line 446, in handler
+    return func(self, *args, **kwargs)
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\decorators.py", line 320, in handler
+    raise e from e
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\decorators.py", line 290, in handler
+    return func(*args, **kwargs)
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\client\grpc_handler.py", line 1285, in hybrid_search
+    return self._execute_hybrid_search(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        hybrid_search_request, timeout, round_decimal=round_decimal, context=context, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\client\grpc_handler.py", line 1163, in _execute_hybrid_search
+    raise e from e
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\client\grpc_handler.py", line 1156, in _execute_hybrid_search
+    check_status(response.status)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\client\utils.py", line 69, in check_status
+    raise MilvusException(status.code, status.reason, status.error_code)
+pymilvus.exceptions.MilvusException: <MilvusException: (code=101, message=failed to search: collection not loaded[collection=464843822000244741])>
+ (decorators.py:391)
+Traceback (most recent call last):
+  File "c:\Users\18050\codedemo\pydemo\academic_retrieval\llm\rag\index_optimization.py", line 83, in <module>
+    ret.query('graph neural-network')
+    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "c:\Users\18050\codedemo\pydemo\academic_retrieval\llm\rag\index_optimization.py", line 67, in query
+    res = self.client.hybrid_search(
+        collection_name=COLLECTION_NAME,
+    ...<3 lines>...
+        output_fields=['content', 'metadata']
+    )
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\milvus_client\milvus_client.py", line 372, in hybrid_search
+    return conn.hybrid_search(
+           ~~~~~~~~~~~~~~~~~~^
+        collection_name,
+        ^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        **kwargs,
+        ^^^^^^^^^
+    )
+    ^
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\decorators.py", line 395, in handler
+    raise e from e
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\decorators.py", line 387, in handler
+    return func(*args, **kwargs)
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\decorators.py", line 446, in handler
+    return func(self, *args, **kwargs)
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\decorators.py", line 320, in handler
+    raise e from e
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\decorators.py", line 290, in handler
+    return func(*args, **kwargs)
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\client\grpc_handler.py", line 1285, in hybrid_search 
+    return self._execute_hybrid_search(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        hybrid_search_request, timeout, round_decimal=round_decimal, context=context, **kwargs
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\client\grpc_handler.py", line 1163, in _execute_hybrid_search
+    raise e from e
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\client\grpc_handler.py", line 1156, in _execute_hybrid_search
+    check_status(response.status)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\18050\codedemo\pydemo\academic_retrieval\.venv\Lib\site-packages\pymilvus\client\utils.py", line 69, in check_status
+    raise MilvusException(status.code, status.reason, status.error_code)
+pymilvus.exceptions.MilvusException: <MilvusException: (code=101, message=failed to search: collection not loaded[collection=464843822000244741])>

@@ -19,6 +19,8 @@ print(client.list_collections())
 #     output_fields=['content', 'metadata']
 # )
 
+# print(results)
+
 # sparse_results = results[0]
 # for i, result in enumerate(sparse_results):
 #     print(f"{i+1}. Score: {result['distance']:.4f}, Content: {result['entity']['content']}")
