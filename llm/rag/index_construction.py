@@ -11,12 +11,12 @@ import pdfplumber
 # from PIL import Image
 import os
 from typing import List, Tuple, Any
-from embedding_model import get_ollama_qwen_embeddings, QWEN_EMBEDDING_DIM
+from llm.rag.embedding_model import get_openai_qwen_embeddings, OPENAI_QWEN_EMBEDDING_DIM
 # import re
 from glob import glob
-import asyncio
+# import asyncio
 import importlib
-from rag_config import *
+from llm.llm_config import *
 
 # class IndexConstructionPDF:
 class IndexConstruction:
@@ -47,7 +47,7 @@ class IndexConstruction:
         schema.add_field(field_name='id', datatype=DataType.VARCHAR, is_primary=True, auto_id=True, max_length=100)
         schema.add_field(field_name='content', datatype=DataType.VARCHAR, max_length=65535, analyzer_params=analyzer_params, enable_match=True, enable_analyzer=True)
         schema.add_field(field_name="sparse_vector", datatype=DataType.SPARSE_FLOAT_VECTOR)
-        schema.add_field(field_name='dense_vector', datatype=DataType.FLOAT_VECTOR, dim=QWEN_EMBEDDING_DIM)
+        schema.add_field(field_name='dense_vector', datatype=DataType.FLOAT_VECTOR, dim=OPENAI_QWEN_EMBEDDING_DIM)
         schema.add_field(field_name='metadata', datatype=DataType.JSON)
 
         bm25_function = Function(
@@ -98,7 +98,7 @@ class IndexConstruction:
                     text = ''
                 metadata['source'] = pdf_name
                 metadata['page_number'] = page_id
-                metadata['type'] = 'multimodal_page'
+                metadata['type'] = 'pdf_multimodal_page'
                 if segment:
                     text = self.segment(text)
                 doc = Document(page_content=text, metadata=metadata)
@@ -121,7 +121,7 @@ class IndexConstruction:
         # uuids = [str(uuid4()) for _ in split_docs]
         # self.vector_store.add_documents(split_docs)
         texts = [doc.page_content for doc in split_docs]
-        embeddings = get_ollama_qwen_embeddings(texts)
+        embeddings = get_openai_qwen_embeddings(texts)
         entities = []
         for i, doc in enumerate(split_docs):
             entities.append({
@@ -132,7 +132,7 @@ class IndexConstruction:
         self.client.insert(COLLECTION_NAME, entities)
         print(f"Inserted {len(entities)} documents")
 
-    def processPDF(self, pdf_path, segment: bool=False, page_range: slice=None, chunk_size: int =800, chunk_overlap: int =64):
+    def processPDF(self, pdf_path, segment: bool=False, page_range: slice=None, chunk_size: int =680, chunk_overlap: int =64):
         docs, images = self.analyzePDF(pdf_path, segment, page_range)
         docs = self.splitDocument(docs, images, chunk_size, chunk_overlap)
         self.storeIntoMilvus(docs)
@@ -169,8 +169,14 @@ class IndexConstruction:
             self.processMarkdown(path)
         
     def deleteItemFromDatabase(self, pdf_name):
-        # self.vector_store.delete(expr=f'source=="{pdf_name}"')
-        ...
+        """Delete all entries from the database with the specified PDF source name."""
+        filter_expr = f'metadata["source"] == "{pdf_name}"'
+        self.client.delete(
+            collection_name=COLLECTION_NAME,
+            filter=filter_expr
+        )
+        print(f"Deleted all entries with source: {pdf_name}")
+
 
     def getIndex(self) -> VectorStoreRetriever:
         # retriever = self.vector_store.as_retriever(search_type="mmr", search_kwargs={"k": 1})
@@ -181,14 +187,13 @@ class IndexConstruction:
     #     docs, images = self.processPDF()
     #     self.splitDocument(docs, images)
     
-
-async def main():
+# async def main():
+def main():
     # For PDF process
-    pdf_paths = glob('./llm/rag/res/*.pdf')[:4]
+    pdf_paths = glob('./res/*.pdf')[:10]
     construction = IndexConstruction()
     construction.processMultiplePDF(pdf_paths)
-      
+     
     
 if __name__ == '__main__':
-    asyncio.run(main())
-
+    ...
